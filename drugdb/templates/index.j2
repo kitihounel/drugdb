@@ -1,0 +1,97 @@
+{% extends 'base.j2' %}
+
+{% block title %} Accueil {% endblock %}
+
+{% block content %}
+<div class="container">
+  <form class="mb-5" method="get" action="">
+    <div class="field has-addons">
+      <div class="control is-expanded">
+        <input class="input" name="term" type="text" placeholder="Entrez un terme">
+      </div>
+      <div class="control">
+        <button type="submit" class="button is-info">
+          Rechercher
+        </a>
+      </div>
+    </div>
+  </form>
+
+  <section>
+    <div class="container">
+    {% if error %}
+      <article class="message">
+        <div class="message-body">
+          Veuillez entrer le terme à rechercher.
+        </div>
+      </article>
+    {% elif show_table %}
+      <h5 class="title is-5">Résultats de la recherche sur le terme &laquo; {{ term }} &raquo;</h5>
+
+      <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+        <thead>
+          <tr>
+            <th>Nom du Médicament</th>
+            <th>Forme</th>
+            <th>Présentation</th>
+            <th>Voix d'administration</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if drugs.__len__() == 0 %}
+            <tr>
+              <td class="has-text-centered" colspan="4">Aucun médicament ne correspond à votre recherche</td>
+            </tr>
+          {% else %}
+            {% for drug in drugs %}
+              <tr>
+                <td>
+                  <a href="{{ url_for('app.show_drug', id=drug['id']) }}">
+                    {{ drug['name'] }}
+                  </td>
+                <td>{{ drug['form'] }}</td>
+                <td>{{ drug['presentation'] }}</td>
+                <td>{{ drug['route'] }}</td>
+              </tr>
+            {% endfor %}
+          {% endif %}
+        </tbody>
+      </table>
+
+      {% if show_pagination %}
+        <div class="has-text-weight-bold has-text-right mb-4">
+          Nombre de médicaments : {{ row_count }} - Nombre de pages : {{ last_page }} - Page actuelle : {{ page }}
+        </div>
+        <nav class="pagination is-right" role="navigation" aria-label="pagination">
+          <ul class="pagination-list">
+            <li>
+              <a class="pagination-link" href="{{ url_for('index', term=term, page=1) }}">
+                Début
+              </a>
+            </li>
+
+            <li>
+              <a class="pagination-link" href="{{ url_for('index', term=term, page=previous_page) }}">
+                Préc.
+              </a>
+            </li>
+
+            <li>
+              <a class="pagination-link" href="{{ url_for('index', term=term, page=next_page) }}">
+                Suiv.
+              </a>
+            </li>
+
+            <li>
+              <a class="pagination-link" href="{{ url_for('index', term=term, page=last_page) }}">
+                Fin
+              </a>
+            </li>
+          </ul>
+        </nav>
+      {% endif %}
+    {% endif %}
+    </div>
+  </section>
+</div>
+{% endblock %}
