@@ -16,16 +16,16 @@ def index():
     context = {}
 
     if len(request.args) != 0:
-        term = request.args.get('term', None)
-        if term is None:
+        term = request.args.get('term', '').strip()
+        if len(term) == 0:
             error = True
         else:
             show_table = True
-            
             db = get_db()
             drugs = db.execute(
+                # TODO: check if this can lead to sql injection.
                 'select * from drug_fts where drug_fts match ? order by rank',
-                [term]
+                [f'"{term}"']
             ).fetchall()
 
             if len(drugs) > ITEMS_PER_PAGE:
@@ -76,7 +76,6 @@ def paginate(drugs):
     previous_page = page - 1 if page > 1 else 1
     next_page = page + 1 if page < n else n
     last_page = n
-    print('debug pages:', n)
 
     lo = (page - 1) * ITEMS_PER_PAGE
     hi = lo + ITEMS_PER_PAGE

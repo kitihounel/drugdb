@@ -7,7 +7,7 @@
   <form class="mb-5" method="get" action="">
     <div class="field has-addons">
       <div class="control is-expanded">
-        <input class="input" name="term" type="text" placeholder="Entrez un terme">
+        <input autofocus class="input" name="term" type="text" placeholder="Entrez un terme">
       </div>
       <div class="control">
         <button type="submit" class="button is-info">
@@ -20,8 +20,8 @@
   <section>
     <div class="container">
     {% if error %}
-      <article class="message">
-        <div class="message-body">
+      <article class="message is-danger">
+        <div class="message-body" style="border: 0px;">
           Veuillez entrer le terme à rechercher.
         </div>
       </article>
@@ -94,4 +94,30 @@
     </div>
   </section>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='popper.min.js') }}"></script>
+<script src="{{ url_for('static', filename='tippy.umd.min.js') }}"></script>
+<script>
+  const f = document.querySelector('form')
+  f.addEventListener('submit', (ev) => {
+    ev.preventDefault()
+
+    const term = f.term.value.trim()
+    if (term.length === 0) {
+      tippy(f.term, {
+        content: 'Veuillez entrer le terme à rechercher.',
+        duration: [100, 1000],
+        theme: 'material'
+      })
+      f.term.value = ''
+      f.term.focus()
+      return
+    }
+
+    f.term.value = term
+    f.submit()
+  })
+</script>
 {% endblock %}
