@@ -1,0 +1,5 @@
+include drugdb/drugs.json
+include drugdb/schema.sql
+graft drugdb/static
+graft drugdb/templates
+global-exclude *.pyc
