@@ -4,14 +4,14 @@
 
 {% block content %}
 <div class="container">
-  <form class="mb-5" method="get" action="">
+  <form class="mb-5 mx-2" method="get" action="">
     <div class="field has-addons">
       <div class="control is-expanded">
         <input autofocus class="input" name="term" type="text" placeholder="Entrez un terme">
       </div>
       <div class="control">
-        <button type="submit" class="button is-info">
-          Rechercher
+        <button type="submit" class="button is-success">
+          &#x1F50E;
         </a>
       </div>
     </div>
@@ -32,9 +32,11 @@
         <thead>
           <tr>
             <th>Nom du Médicament</th>
+            <!--
             <th>Forme</th>
             <th>Présentation</th>
             <th>Voix d'administration</th>
+            -->
           </tr>
         </thead>
         <tbody>
@@ -49,9 +51,11 @@
                   <a href="{{ url_for('app.show_drug', id=drug['id']) }}">
                     {{ drug['name'] }}
                   </td>
+                <!--
                 <td>{{ drug['form'] }}</td>
                 <td>{{ drug['presentation'] }}</td>
                 <td>{{ drug['route'] }}</td>
+                -->
               </tr>
             {% endfor %}
           {% endif %}

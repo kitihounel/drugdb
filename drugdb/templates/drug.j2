@@ -5,77 +5,112 @@
 {% block content %}
 <div class="container">
   <h5 class="title is-5 mb-4" style="align-items: center; display: flex">
-   <button class="button has-text-weight-bold is-size-6 is-link is-rounded" id="back-button">&larr;</button>
+   <button class="button has-text-weight-bold is-size-6 is-success" id="back-button">&larr;</button>
    &nbsp;&nbsp;
    <span>Détails du médicament</span>
   </h5>
 
-	<table class="table is-bordered is-striped is-hoverable is-fullwidth">
-		<tbody>
-			<tr>
-				<th>Nom</th>
-				<td>{{ drug['name'] }}</td>
-			</tr>
+  <div class="table-container mb-4">
+    <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+      <tbody>
+        <tr>
+          <th>Nom</th>
+        </tr>
 
-			<tr>
-				<th>DCI</th>
-				<td>
-					{% for item in ingredients %}
-						<p class="mb-2">
-							<a href="{{ url_for('index', term=item) }}">
-								{{ item }} <br>
-							</a>
-						</p>
-					{% endfor %}
-				</td>
-			</tr>
+        <tr>
+          <td>{{ drug['name'] }}</td>
+        </tr>
 
-      <tr>
-				<th class="has-text-danger">Dosage</th>
-				<td>{{ drug['dose'] }}</td>
-			</tr>
+        <tr>
+          <th>DCI</th>
+        </tr>
 
-			<tr>
-				<th>Forme</th>
-				<td>{{ drug['form'] }}</td>
-			</tr>
+        <tr>
+          <td>
+            {% for item in ingredients %}
+              <p class="mb-2">
+                <a href="{{ url_for('index', term=item) }}">
+                  {{ item }} <br>
+                </a>
+              </p>
+            {% endfor %}
+          </td>
+        </tr>
 
-			<tr>
-				<th>Voie d'administration</th>
-				<td>{{ drug['route'] }}</td>
-			</tr>
+        <tr>
+          <th class="has-text-danger">Dosage</th>
+        </tr>
 
-			<tr>
-				<th>Présentation</th>
-				<td>{{ drug['presentation'] }}</td>
-			</tr>
+        <tr>
+          <td>{{ drug['dose'] }}</td>
+        </tr>
 
-			<tr>
-				<th>Classe</th>
-				<td>{{ drug['class'] }}</td>
-			</tr>
+        <tr>
+          <th>Forme</th>
+        </tr>
 
-			<tr>
-				<th>AMM</th>
-				<td>{{ drug['auth'] }}</td>
-			</tr>
+        <tr>
+          <td>{{ drug['form'] }}</td>
+        </tr>
 
-			<tr>
-				<th>Date d'expiration de l'AMM</th>
-				<td>{{ drug['auth_expiration_date'] }}</td>
-			</tr>
+        <tr>
+          <th>Voie d'administration</th>
+        </tr>
 
-			<tr>
-				<th>Laboratoire</th>
-				<td>{{ drug['manufacturer'] }}</td>
-			</tr>
+        <tr>
+          <td>{{ drug['route'] }}</td>
+        </tr>
 
-			<tr>
-				<th>Exploitant</th>
-				<td>{{ drug['owner'] }}</td>
-			</tr>
-		</tbody>
-	</table>
+        <tr>
+          <th>Présentation</th>
+        </tr>
+
+        <tr>
+          <td>{{ drug['presentation'] }}</td>
+        </tr>
+
+        <tr>
+          <th>Classe</th>
+        </tr>
+
+        <tr>
+          <td>{{ drug['class'] }}</td>
+        </tr>
+
+        <tr>
+          <th>AMM</th>
+        </tr>
+
+        <tr>
+          <td>{{ drug['auth'] }}</td>
+        </tr>
+
+        <tr>
+          <th>Date d'expiration de l'AMM</th>
+        </tr>
+
+        <tr>
+          <td>{{ drug['auth_expiration_date'] }}</td>
+        </tr>
+
+        <tr>
+          <th>Laboratoire</th>
+        </tr>
+
+        <tr>
+          <td>{{ drug['manufacturer'] }}</td>
+        </tr>
+
+        <tr>
+          <th>Exploitant</th>
+        </tr>
+
+        <tr>
+          <td>{{ drug['owner'] }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 {% endblock %}
 
