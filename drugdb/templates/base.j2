@@ -6,6 +6,14 @@
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bulma.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='tippy.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='tippy-material-theme.css') }}">
+  <style>
+    body {
+      font-family: 'Avenir LT Std 45 Book', Lato, sans-serif;
+    }
+    input {
+      font-family: inherit;
+    }
+  </style>
   <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
