@@ -17,17 +17,21 @@
   <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-  <nav class="navbar is-success mb-5">
+  <nav class="navbar has-background-success-dark mb-5 is-transparent">
     <div class="container is-fluid">
       <div class="navbar-brand">
-        <a class="navbar-item" href="{{ url_for('index') }}">
-          <!-- <img src="{{ url_for('static', filename='bowl-of-hygieia-white-48x.png') }}"> -->
-          Pharmacie Renouveau
-        </a>
         <span class="navbar-item">
+          <img src="{{ url_for('static', filename='bowl-of-hygieia-white-48x.png') }}">
+        </span>
+      </div>
+      <div class="navbar-menu">
+        <span class="navbar-item has-text-white has-text-weight-bold">
+          M&eacute;dicaments autoris&eacute;s au B&eacute;nin
+        </span>
+        <span class="navbar-item has-text-white">
           |
         </span>
-        <a class="navbar-item" href="{{ url_for('index')  }}">
+        <a class="navbar-item has-text-white has-text-weight-bold" href="{{ url_for('index')  }}">
           Accueil
         </a>
       </div>      
