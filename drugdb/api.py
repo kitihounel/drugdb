@@ -5,7 +5,7 @@ from .db import get_db
 
 bp = Blueprint('app', __name__, url_prefix='/api')
 
-ITEMS_PER_PAGE = 10
+PAGE_SIZE = 10
 
 
 @bp.route('/search')
@@ -50,11 +50,11 @@ def paginate(drugs):
     except ValueError:
         return ({'error': 'Page parameter should be a positive integer'}, 400)
 
-    last_page = len(drugs) // ITEMS_PER_PAGE + int(len(drugs) % ITEMS_PER_PAGE != 0)
+    last_page = len(drugs) // PAGE_SIZE + int(len(drugs) % PAGE_SIZE != 0)
     if not 1 <= page <= last_page:
         return ({ 'error': 'Invalid page', 'first_page': 1, 'last_page': last_page }, 404)
 
-    lo = (page - 1) * ITEMS_PER_PAGE
-    hi = lo + ITEMS_PER_PAGE
+    lo = (page - 1) * PAGE_SIZE
+    hi = lo + PAGE_SIZE
 
-    return { 'drugs': drugs[lo:hi], 'last_page': last_page, 'items_per_page': ITEMS_PER_PAGE }
+    return { 'drugs': drugs[lo:hi], 'last_page': last_page, 'per_page': PAGE_SIZE }
