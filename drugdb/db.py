@@ -1,4 +1,4 @@
-from sqlite3 import connect, Row, PARSE_DECLTYPES
+from sqlite3 import connect, PARSE_DECLTYPES
 from json import loads
 
 from flask import current_app, g

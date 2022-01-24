@@ -16,26 +16,23 @@ def search():
         return ({ 'error': 'No search term provided.' }, 400)
 
     db = get_db()
-    drugs = db.execute(
-        # TODO: check if this can lead to sql injection.
-        'select * from drug_fts where drug_fts match ? order by rank',
-        [f'"{term}"']
-    ).fetchall()
+    query = 'select * from drug_fts where drug_fts match ? order by rank'
+    params = [f'"{term}"']
+    drugs = db.execute(query, params).fetchall()
 
-    
     return [] if len(drugs) == 0 else paginate(drugs)
 
 
-@bp.route('/drug/<int:id>')
+@bp.route('/drug/<int:drug_id>')
 @cross_origin()
-def show_drug(id):
-    drug = get_drug(id)
+def show_drug(drug_id):
+    drug = get_drug(drug_id)
 
     return drug if drug is not None else ('', 404)
 
 
-def get_drug(id):
-    params = [id]
+def get_drug(drug_id):
+    params = [drug_id]
     drug = get_db().execute(
         'select * from drug where id = ?',
         params
