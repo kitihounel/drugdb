@@ -54,4 +54,9 @@ def paginate(drugs):
     lo = (page - 1) * PAGE_SIZE
     hi = lo + PAGE_SIZE
 
-    return { 'drugs': drugs[lo:hi], 'last_page': last_page, 'per_page': PAGE_SIZE }
+    return dict(
+        drugs=drugs[lo:hi],
+        page=page,
+        last_page=last_page,
+        per_page=PAGE_SIZE
+    )
