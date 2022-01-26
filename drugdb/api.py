@@ -3,7 +3,7 @@ from flask_cors import cross_origin
 from .db import get_db
 
 
-bp = Blueprint('app', __name__, url_prefix='/api')
+bp = Blueprint('api', __name__, url_prefix='/api')
 
 PAGE_SIZE = 10
 
@@ -11,19 +11,19 @@ PAGE_SIZE = 10
 @bp.route('/search')
 @cross_origin()
 def search():
-    term = request.args.get('term', '').strip()
-    if len(term) == 0:
-        return ({ 'error': 'No search term provided.' }, 400)
+    q = request.args.get('query', '').strip()
+    if len(q) == 0:
+        return ({ 'error': 'No query provided.' }, 400)
 
     db = get_db()
     query = 'select * from drug_fts where drug_fts match ? order by rank'
-    params = [f'"{term}"']
+    params = [f'"{q}"']
     drugs = db.execute(query, params).fetchall()
 
-    return [] if len(drugs) == 0 else paginate(drugs)
+    return paginate(drugs)
 
 
-@bp.route('/drug/<int:drug_id>')
+@bp.route('/drugs/<int:drug_id>')
 @cross_origin()
 def show_drug(drug_id):
     drug = get_drug(drug_id)
@@ -45,9 +45,10 @@ def paginate(drugs):
     try:
         page = request.args.get('page', 1, int)
     except ValueError:
-        return ({'error': 'Page parameter should be a positive integer'}, 400)
+        return ({ 'error': 'Page parameter should be a positive integer' }, 400)
 
-    last_page = len(drugs) // PAGE_SIZE + int(len(drugs) % PAGE_SIZE != 0)
+    k = len(drugs) // PAGE_SIZE + int(len(drugs) % PAGE_SIZE != 0)
+    last_page = max(1, k)
     if not 1 <= page <= last_page:
         return ({ 'error': 'Invalid page', 'first_page': 1, 'last_page': last_page }, 404)
 
@@ -58,5 +59,6 @@ def paginate(drugs):
         drugs=drugs[lo:hi],
         page=page,
         last_page=last_page,
-        per_page=PAGE_SIZE
+        per_page=PAGE_SIZE,
+        total=len(drugs)
     )
