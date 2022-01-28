@@ -5,7 +5,7 @@ from flask import Flask, redirect, url_for
 
 def create_app(test_config=None):
     # create and configure the app
-    app = Flask(__name__, instance_relative_config=True)
+    app = Flask(__name__, instance_relative_config=True, static_folder='app', static_url_path="/app")
     app.config.from_mapping(
         SECRET_KEY='fb^L5EUu;7r~T&k[kD.y_\tfK&[SeXiU},I[}Q01afflgAsB@',
         DATABASE=path.join(app.instance_path, 'db.sqlite'),
@@ -30,8 +30,9 @@ def create_app(test_config=None):
     from .api import bp
     app.register_blueprint(bp)
 
-    @app.route('/')
-    def index():
-        return redirect(url_for('static', filename='index.html'))
+    @app.route('/', defaults={'path': ''})
+    @app.route('/<path:path>')
+    def catch_all(path):
+        return app.send_static_file("index.html")
 
     return app
